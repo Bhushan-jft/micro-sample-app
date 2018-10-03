@@ -1,0 +1,66 @@
+Here we have 4 mico services
+
+1: service-discovery -> This service is using Netflix Eureka service registry, which will register/remove all other micro servies with it.
+                        All can see all register services using http://localhost:9090 (Eureka Dashboard)
+
+2: gateway-service -> This is a gateway for client, this is using ZOOL for handling request forwarding. All client request will come to it and it will use fetch the services from service-discovery and forward request to specific services based on url pattern. gate way service is running on 9092 port
+
+3: user-service -> Currently User service have simply 2 api(this server is running on 9091)
+
+----------------------------------------------.......
+I: (Get user)
+Get Request -> http://localhost:9091/user/1
+
+ex. response: 
+{"id":1,"firstName":"Bhushan","lastName":"Uniyal"}
+...................................................
+
+II: (Get list of the user)
+
+Get Request -> http://localhost:9091/user/list
+
+ex. response: 
+[{"id":1,"firstName":"Bhushan","lastName":"Uniyal"},{"id":2,"firstName":"Pankaj","lastName":"Kala"},{"id":3,"firstName":"Varun","lastName":"Sharma"}]
+
+....................................................
+
+4: movie-service -> Currently Movie service have simply 2 api(this server is running on 9093)
+
+....................................................
+I: (Get movie)
+Get Request -> http://localhost:9093/movie/1
+
+ex. response: 
+{"id":1,"name":"The Shawshank Redemption ","description":"Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."}
+.....................................................
+II: (Get list of the movies)
+
+Get Request -> http://localhost:9093/movie/list
+
+ex. response:
+
+[{"id":1,"name":"The Shawshank Redemption ","description":"Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."},{"id":2,"name":" The Godfather","description":"The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son."},{"id":3,"name":"The Dark Knight ","description":"When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice."},{"id":4,"name":" The Godfather: Part II ","description":"The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate."},{"id":5,"name":"Pulp Fiction ","description":"The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption."}]
+....................................................
+
+
+Access all above api using Gateway service(gateway ruuning on 9092 port)
+
+Access user-service data :
+
+http://localhost:9092/us/user/1
+http://localhost:9092/us/user/list
+
+Access movie-service data :
+
+http://localhost:9092/ms/movie/list
+http://localhost:9092/ms/movie/1
+
+
+
+Mechine Setup:
+* Maven
+* Java8
+
+
+run services: run "mvn spring-boot:run" command under projects folder
+
